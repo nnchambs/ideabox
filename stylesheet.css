@@ -28,6 +28,13 @@ h1 .box-color {
   color: #6D6E71
 }
 
+/* input & button styling*/
+
+input, button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
 #idea-title-input {
   height: 20px;
   width: 500px;
@@ -45,10 +52,11 @@ h1 .box-color {
 .save-button {
   height: 40px;
   width: 500px;
-  margin: 5px 0;
+  margin: 5px 0 20px;
   order: 4;
   background-color: #00A79D;
   color: #FFFFFF;
+  border: none;
 }
 
 .save-button:hover {
@@ -58,6 +66,7 @@ h1 .box-color {
 .search-input {
   height: 20px;
   width: 500px;
+  margin: 20px 0;
   order: 5;
 }
 
