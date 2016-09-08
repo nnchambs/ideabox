@@ -13,19 +13,24 @@ function Idea(title, body) {
   this.title = title;
   this.body = body;
   this.quality = "swill";
-
+  this.uniqueID = Date.now();
 };
 
 
+//function to generate new idea
 function generateNewIdea() {
   var newIdea = new Idea();
   newIdea.title = $('#idea-title-input').val();
   newIdea.body = $('#idea-body-input').val();
+  newIdea.uniqueID = Date.now();
+  debugger;
+  localStorage.setItem(Date.now().toJSON(), newIdea.toJSON());
 };
 
 
+
 //function to generate new Idea
-var myIdea = new Idea ("bahah", "alalala");
+// var myIdea = new Idea ();
 
 // event listener for save button to trigger getInput functions
 $('.container').on('click', '.save-button', function(){
@@ -34,7 +39,4 @@ $('.container').on('click', '.save-button', function(){
 
 
 
-// this.uniqueId = function() {
-//    var date = Date.now().toString();
-//    return date;
-// }
+/
