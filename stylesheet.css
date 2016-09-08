@@ -9,8 +9,8 @@ font-family: 'Open Sans', sans-serif;*/
   background-color: #E5F3F2;
 }
 
-/* h1 specific styling */
-h1 {
+/* header specific styling */
+header {
   font-family: 'Roboto Slab', serif;
   font-size: 50px;
   width: 180px;
@@ -19,12 +19,11 @@ h1 {
   order: 1;
 }
 
-
-h1 .idea-color {
+header .idea-color {
   color: #00A79D;
 }
 
-h1 .box-color {
+header .box-color {
   color: #6D6E71
 }
 
@@ -63,15 +62,34 @@ input, button {
   background-color: #045E55;
 }
 
-.search-input {
-  height: 20px;
-  width: 500px;
-  margin: 20px 0;
-  order: 5;
-}
+/* Search Results Section Styling */
 
 .results-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.search-input {
+  height: 20px;
+  width: 500px;
+  margin: 30px 0;
+  order: 1;
+}
+
+h1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 25px;
+  color: #6D6E71;
+}
+
+.idea-output {
+  width: 500px;
+  order: 2;
+}
+
+img.delete {
+  width: 30px;
+  height: 30px;
+  order: 2;
 }
