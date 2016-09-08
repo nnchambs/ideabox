@@ -7,18 +7,24 @@ function Idea(title, body) {
 };
 
 
-//function to generate new idea
+//function to generate new idea and set it to local storage
 function generateNewIdea() {
   var newIdea = new Idea();
   newIdea.title = $('#idea-title-input').val();
   newIdea.body = $('#idea-body-input').val();
-  localStorage.setItem('ideas ,', newIdea);
+  if (localStorage.ideas) {
+    var parsedLocalStorageIdeas = JSON.parse(localStorage.ideas);
+  }
+  else {
+  var parsedLocalStorageIdeas = [];
+}
+  parsedLocalStorageIdeas.push(newIdea);
+  var stringifiedLocalStorageIdeas = JSON.stringify(parsedLocalStorageIdeas);
+  localStorage.setItem('ideas', stringifiedLocalStorageIdeas);
 };
 
 
 
-//function to generate new Idea
-// var myIdea = new Idea ();
 
 // event listener for save button to trigger getInput functions
 $('.container').on('click', '.save-button', function(){

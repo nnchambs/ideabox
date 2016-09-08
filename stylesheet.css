@@ -1,2 +1,95 @@
 /*font-family: 'Roboto Slab', serif;
 font-family: 'Open Sans', sans-serif;*/
+
+/* controlling how the content is displayed */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E5F3F2;
+}
+
+/* header specific styling */
+header {
+  font-family: 'Roboto Slab', serif;
+  font-size: 50px;
+  width: 180px;
+  height: 50px;
+  margin: 20px 0;
+  order: 1;
+}
+
+header .idea-color {
+  color: #00A79D;
+}
+
+header .box-color {
+  color: #6D6E71
+}
+
+/* input & button styling*/
+
+input, button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+#idea-title-input {
+  height: 20px;
+  width: 500px;
+  margin: 5px 0;
+  order: 2;
+}
+
+#idea-body-input {
+  height: 20px;
+  width: 500px;
+  margin: 5px 0;
+  order: 3;
+}
+
+.save-button {
+  height: 40px;
+  width: 500px;
+  margin: 5px 0 20px;
+  order: 4;
+  background-color: #00A79D;
+  color: #FFFFFF;
+  border: none;
+}
+
+.save-button:hover {
+  background-color: #045E55;
+}
+
+/* Search Results Section Styling */
+
+.results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-input {
+  height: 20px;
+  width: 500px;
+  margin: 30px 0;
+  order: 1;
+}
+
+h1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 25px;
+  color: #6D6E71;
+}
+
+.idea-output {
+  width: 500px;
+  order: 2;
+}
+
+img.delete {
+  width: 30px;
+  height: 30px;
+  order: 2;
+}
