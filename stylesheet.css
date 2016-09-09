@@ -63,6 +63,7 @@ input, button {
 
 .save-button:hover {
   background-color: #045E55;
+  cursor: pointer;
 }
 
 /* Search Results Section Styling */
@@ -90,8 +91,12 @@ h1 {
 p {
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
-  letter-spacing: 1px;
+  letter-spacing: .5px;
   color: #939598;
+}
+
+.idea-quality, .idea-quality-rank {
+  
 }
 
 .idea-output {
@@ -99,15 +104,58 @@ p {
   order: 2;
 }
 
-input.delete {
+.delete {
+  background: url(images/delete.svg);
   width: 30px;
   height: 30px;
   float: right;
   outline: none;
+  border: none;
+  color: none;
+}
+
+.delete:hover {
+  background: url(images/delete-hover.svg);
+  cursor: pointer;
 }
 
 .idea-body-output {
   width: 500px;
   order: 3;
   margin: 20px 0;
+}
+
+.buttons {
+width: 500px;
+order: 4;
+}
+
+.upVote {
+  background: url(images/upvote.svg);
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: none;
+  color: none;
+  margin-right: 10px;
+}
+
+.upVote:hover {
+  background: url(images/upvote-hover.svg);
+  cursor: pointer;
+}
+
+.downVote {
+  background: url(images/downvote.svg);
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: none;
+  color: none;
+  margin: 0 20px 0 10px;
+}
+
+.downVote:hover {
+  background: url(images/downvote-hover.svg);
+  cursor:pointer;
 }
