@@ -6,22 +6,33 @@ function Idea(title, body) {
   this.uniqueID = Date.now();
 };
 
+var ideaBox = {
+  ideas : [],
+  // add :
+  // remove :
+
+  store : function generateNewIdea() {
+          var newIdea = new Idea();
+          newIdea.title = $('#idea-title-input').val();
+          newIdea.body = $('#idea-body-input').val();
+          if (localStorage.ideas) {
+            var parsedLocalStorageIdeas = JSON.parse(localStorage.ideas);
+          }
+          else {
+            var parsedLocalStorageIdeas = [];
+          }
+          parsedLocalStorageIdeas.push(newIdea);
+          var stringifiedLocalStorageIdeas = JSON.stringify(parsedLocalStorageIdeas);
+          localStorage.setItem('ideas', stringifiedLocalStorageIdeas);
+        }
+  // retrieve :
+  // render :
+  // find :
+
+};
+
 
 //function to generate new idea and set it to local storage
-function generateNewIdea() {
-  var newIdea = new Idea();
-  newIdea.title = $('#idea-title-input').val();
-  newIdea.body = $('#idea-body-input').val();
-  if (localStorage.ideas) {
-    var parsedLocalStorageIdeas = JSON.parse(localStorage.ideas);
-  }
-  else {
-  var parsedLocalStorageIdeas = [];
-}
-  parsedLocalStorageIdeas.push(newIdea);
-  var stringifiedLocalStorageIdeas = JSON.stringify(parsedLocalStorageIdeas);
-  localStorage.setItem('ideas', stringifiedLocalStorageIdeas);
-};
 
 
 //function to append new idea to the idea box DOM
@@ -35,6 +46,6 @@ function appendNewIdea() {
 
 // event listener for save button to trigger getInput functions
 $('.container').on('click', '.save-button', function(){
-  generateNewIdea();
+  ideaBox.store();
   appendNewIdea();
 });
