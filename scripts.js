@@ -6,16 +6,20 @@ function Idea(title, body, quality, id) {
   this.uniqueID = id || Date.now();
 };
 
+
+
 var ideaBox = {
   ideas : [],
   // add :
-  remove : function uniqueID(id) {
-          var uniqueID = parseInt(id);
-          this.ideas = this.ideas.filter(function(Idea) {
-            return Idea.uniqueID !== uniqueID;
-            this.store
-          });
-  },
+  remove : function removeIdea(uniqueID) {
+    id = parseInt(uniqueID);
+    this.ideas = this.ideas.filter(function(m){
+      return m.id !== this.id;
+      this.store;
+    })
+    },
+
+
 
   store : function generateNewIdea() {
           var title = $('#idea-title-input').val();
@@ -31,7 +35,7 @@ var ideaBox = {
   // find :
 
 };
-grabStorageAndRender()
+
 
 function grabStorageAndRender() {
   ideaBox.ideas = JSON.parse(localStorage.ideas) || [];
@@ -51,11 +55,18 @@ function grabStorageAndRender() {
 function render(idea) {
   // var titleInput = $('#idea-title-input').val();
   // var bodyInput = $('#idea-body-input').val();
-  $('.results-container').append(`<section><h1 class="idea-output">${idea.title}<button type="image" class="delete"></button></h1> <p class="idea-body-output">${idea.body}</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">${idea.quality}</span></section>`);
+  $('.results-container').append(`<section><h1 class="idea-output">${idea.title}<button type="image" id="${idea.uniqueID}" class="delete"></button></h1> <p class="idea-body-output">${idea.body}</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">${idea.quality}</span></section>`);
 };
+
+// grabStorageAndRender();
 
 
 // event listener for save button to trigger getInput functions
 $('.container').on('click', '.save-button', function(){
   ideaBox.store();
 });
+
+$('.results-container').on('click', '.delete', function(){
+  // var uniqueID = this.;
+  ideaBox.remove(uniqueID);
+})
