@@ -20,7 +20,7 @@ function Idea(title, body, quality, id) {
   this.title = title;
   this.body = body;
   this.quality = quality || "swill";
-  this.uniqueID = id || Date.now();
+  this.id = id || Date.now();
 };
 // when the page loads, please set the local storage to an empty array with the key of 'ideas' and then render them on the DOM, pretty please
 function onLoad() {
@@ -43,7 +43,7 @@ function getIdeasFromLocalStorage() {
   function renderLocalStorageAsIdeas () {
     var ideas = getIdeasFromLocalStorage();
     ideas.forEach (function(idea){
-      renderIdeas(idea.title, idea.body, idea.quality, idea.uniqueID);
+      renderIdeas(idea.title, idea.body, idea.quality, idea.id);
     })
 
   };
@@ -51,7 +51,6 @@ function getIdeasFromLocalStorage() {
   function generateNewIdea() {
           var newIdea = new Idea (getTitleInput(), getBodyInput())
           ideas = getIdeasFromLocalStorage();
-          debugger;
           ideas.push(newIdea);
           var stringifiedIdeas = JSON.stringify(ideas);
           localStorage.setItem('ideas', stringifiedIdeas);
@@ -62,19 +61,35 @@ function getIdeasFromLocalStorage() {
 function renderIdeas(title, body, quality, id) {
   // var titleInput = $('#idea-title-input').val();
   // var bodyInput = $('#idea-body-input').val();
-  $('.results-container').append(`<section><h1 class="idea-output">` + title + `<button type="image" id= ` + id +  ` class="delete"></button></h1> <p class="idea-body-output">`+ body + `</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">`+ quality +`</span></section>`);
+  $('.results-container').append(`<section id= ` + id +  ` class="idea-output"><h1>` + title + `<button type="image" class="delete"></button></h1> <p class="idea-body-output">`+ body + `</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">`+ quality +`</span></section>`);
 };
 
+// function to remove Idea from DOM
+function removeIdeaFromDOM() {
+  var ideaOutput = parseInt($(this).parents().attr('id'));
+  debugger;
+}
+
+
 // function to remove idea
-function removeIdea() {
-
-
-    id = parseInt(this.uniqueID);
-    this.ideas = this.ideas.filter(function(m){
-      return m.id !== this.id;
-      this.store;
-    })
+function removeIdeaFromLocalStorage() {
+  var ideaToBeRemoved = $(this).closest('.idea-output');
+  var idToBeRemoved = parseInt(ideaToBeRemoved.attr('id'));
+  var allIdeas = getIdeasFromLocalStorage();
+  allIdeas = allIdeas.filter(function(m){
+    return m.id !== this.id
+  })
+    localStorage.setItem('ideas', JSON.stringify(allIdeas));
+    renderLocalStorageAsIdeas();
   };
+
+
+  //   id = parseInt(this.id);
+  //   this.ideas = this.ideas.filter(function(m){
+  //     return m.id !== this.id;
+  //     this.store;
+  //   })
+  // };
 
 // //get ideas from localStorage
 // function getIdeasFromLocalStorage() {
@@ -87,7 +102,7 @@ function removeIdea() {
 //     debugger;
 //     var ideas = getOrSetLocalStorage();
 //     ideas.forEach (function(idea){
-//       render(idea.title, idea.body, idea.quality, idea.uniqueID);
+//       render(idea.title, idea.body, idea.quality, idea.id);
 //     })
 //     // return ideaBox.ideas;
 //   };
@@ -118,7 +133,7 @@ function removeIdea() {
 // function makeLocalStorageIdeas () {
 //   var ideas = getOrSetLocalStorage();
 //   ideas.forEach (function(idea){
-//     renderIdeas(idea.title, idea.body, idea.quality, idea.uniqueID);
+//     renderIdeas(idea.title, idea.body, idea.quality, idea.id);
 //   })
 // };
 
@@ -128,8 +143,8 @@ function removeIdea() {
 // var ideaBox = {
 //   ideas : [],
 //   // add :
-//   remove : function removeIdea(uniqueID) {
-//     id = parseInt(uniqueID);
+//   remove : function removeIdea(id) {
+//     id = parseInt(id);
 //     this.ideas = this.ideas.filter(function(m){
 //       return m.id !== this.id;
 //       this.store;
@@ -195,7 +210,7 @@ function removeIdea() {
 //     debugger;
 //     var ideas = getOrSetLocalStorage();
 //     ideas.forEach (function(idea){
-//       render(idea.title, idea.body, idea.quality, idea.uniqueID);
+//       render(idea.title, idea.body, idea.quality, idea.id);
 //     })
 //     // return ideaBox.ideas;
 //   };
@@ -247,5 +262,6 @@ $('.container').on('click', '.save-button', function(){
 });
 
 $('.results-container').on('click', '.delete', function(){
-  removeIdea(uniqueID);
+  // removeIdeaFromLocalStorage();
+  removeIdeaFromDOM();
 });
