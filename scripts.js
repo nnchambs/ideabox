@@ -65,6 +65,16 @@ function renderIdeas(title, body, quality, id) {
   $('.results-container').append(`<section><h1 class="idea-output">` + title + `<button type="image" id= ` + id +  ` class="delete"></button></h1> <p class="idea-body-output">`+ body + `</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">`+ quality +`</span></section>`);
 };
 
+// function to remove idea
+function removeIdea() {
+
+
+    id = parseInt(this.uniqueID);
+    this.ideas = this.ideas.filter(function(m){
+      return m.id !== this.id;
+      this.store;
+    })
+  };
 
 // //get ideas from localStorage
 // function getIdeasFromLocalStorage() {
@@ -236,6 +246,6 @@ $('.container').on('click', '.save-button', function(){
   clearInputFields();
 });
 
-// $('.results-container').on('click', '.delete', function(){
-//   ideaBox.remove(uniqueID);
-// });
+$('.results-container').on('click', '.delete', function(){
+  removeIdea(uniqueID);
+});
