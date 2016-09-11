@@ -1,3 +1,9 @@
+var $titleInput = $('#idea-title-input');
+var $bodyInput = $('#idea-body-input');
+
+
+onLoad();
+
 //an idea object has a unique ID, title, body, and a quality.
 function Idea(title, body, quality, id) {
   this.title = title;
@@ -5,6 +11,74 @@ function Idea(title, body, quality, id) {
   this.quality = quality || "swill";
   this.uniqueID = id || Date.now();
 };
+
+function onLoad() {
+  getOrSetLocalStorage();
+  makeLocalStorageIdeas();
+}
+
+//get ideas from localStorage
+function getIdeasFromLocalStorage() {
+  var ideas = local.storage.getItem('ideas');
+  return JSON.parse(ideas);
+}
+
+
+// get local storage and set it to [] if there is no local storage
+function setLocalStorage () {
+if (localStorage.getItem('ideas') === null) {
+     localStorage.setItem ('ideas', JSON.stringify([]));
+   }
+};
+
+//get ideas from localStorage
+function getIdeasFromLocalStorage() {
+  var ideas = local.storage.getItem('ideas');
+  return JSON.parse(ideas);
+}
+
+// render the goddamn ideas
+  function renderLocalStorageAsFuckingIdeas () {
+    debugger;
+    var ideas = getOrSetLocalStorage();
+    ideas.forEach (function(idea){
+      render(idea.title, idea.body, idea.quality, idea.uniqueID);
+    })
+    // return ideaBox.ideas;
+  };
+
+
+function generateNewIdea() {
+        var title = $titleInput.val();
+        var body = $bodyInput.val();
+        var newIdea = new Idea(title, body);
+        ideaBox.ideas.push(newIdea);
+        var stringifiedIdeas = JSON.stringify(this.ideas);
+        localStorage.setItem('ideas', stringifiedIdeas);
+        render(newIdea);
+        clearInputFields();
+
+function getOrSetLocalStorage () {
+ideaBox.ideas = localStorage.getItem('ideas');
+
+if (ideaBox.ideas === null) {
+  localStorage.setItem ('ideas', JSON.stringify([]));
+    }
+else {
+  ideaBox.ideas = JSON.parse(ideaBox.ideas);
+    }
+return ideaBox.ideas;
+};
+
+function makeLocalStorageIdeas () {
+  debugger;
+  var ideas = getOrSetLocalStorage();
+  ideas.forEach (function(idea){
+    render(idea.title, idea.body, idea.quality, idea.uniqueID);
+  })
+  // return ideaBox.ideas;
+};
+
 
 
 
@@ -22,13 +96,14 @@ var ideaBox = {
 
 
   store : function generateNewIdea() {
-          var title = $('#idea-title-input').val();
-          var body = $('#idea-body-input').val();
+          var title = $titleInput.val();
+          var body = $bodyInput.val();
           var newIdea = new Idea(title, body);
-          this.ideas.push(newIdea);
+          ideaBox.ideas.push(newIdea);
           var stringifiedIdeas = JSON.stringify(this.ideas);
           localStorage.setItem('ideas', stringifiedIdeas);
           render(newIdea);
+          clearInputFields();
           // storeIdeas();
         }
   // retrieve :
@@ -36,16 +111,76 @@ var ideaBox = {
 
 };
 
+// function generateNewIdea() {
+//   var title = $titleInput.val();
+//   var body = $bodyInput.val();
+//   var newIdea = new Idea(title, body);
+//   storeNewIdea(newIdea);
+//
+// }
+//
+//
+// function storeNewIdea (newIdea) {
+//   this.ideas.push(newIdea);
+//   var stringifiedIdeas = JSON.stringify(this.ideas);
+//   localStorage.setItem('ideas', stringifiedIdeas);
+// }
 
-function grabStorageAndRender() {
-  ideaBox.ideas = JSON.parse(localStorage.ideas) || [];
-  for(var i = 0; i < ideaBox.ideas.length; i++) {
-    var object = ideaBox.ideas[i];
-    var idea = new Idea(object.title, object.body, object.quality, object.id)
-    ideaBox.ideas[i] = idea;
-    render(idea)
-  }
+
+// function storeNewIdea() {
+//   this.ideas.push(newIdea)
+//   var stringifiedIdeas = JSON.stringify(this.ideas);
+//   localStorage.setItem('ideas', stringifiedIdeas)
+// };
+
+
+// get local storage and set it to [] if there is no local storage
+function setLocalStorage () {
+if (localStorage.getItem('ideas') === null) {
+     localStorage.setItem ('ideas', JSON.stringify([]));
+   }
+};
+
+//get ideas from localStorage
+function getIdeasFromLocalStorage() {
+  var ideas = local.storage.getItem('ideas');
+  return JSON.parse(ideas);
 }
+
+// render the goddamn ideas
+  function renderLocalStorageAsFuckingIdeas () {
+    debugger;
+    var ideas = getOrSetLocalStorage();
+    ideas.forEach (function(idea){
+      render(idea.title, idea.body, idea.quality, idea.uniqueID);
+    })
+    // return ideaBox.ideas;
+  };
+
+
+//render that shit (ideaBox.ideas) on the page
+
+
+
+// need to re-write grabStorageAndRender with a forEach command where forEach goes through the ideas array and turns each localStorage item into an idea and then renders it on the page
+// function grabStorageAndRender() {
+//   ideaBox.ideas = JSON.parse(localStorage.ideas) || [];
+//
+//
+//   var idea = new Idea(object.title, object.body, object.quality, object.id)
+//
+//   forEach(new Idea(ideaBox.ideas) {
+//
+//
+//   }
+//
+//   ideaBox.ideas[i] = idea;
+//
+//   for(var i = 0; i < ideaBox.ideas.length; i++) {
+//     var object = ideaBox.ideas[i];
+//     render(idea)
+//   }
+// }
 
 //function to generate new idea and set it to local storage
 
@@ -60,13 +195,18 @@ function render(idea) {
 
 // grabStorageAndRender();
 
+//clear the input fields
+function clearInputFields() {
+   $titleInput.val('');
+   $bodyInput.val('');
+};
 
 // event listener for save button to trigger getInput functions
 $('.container').on('click', '.save-button', function(){
   ideaBox.store();
+
 });
 
-$('.results-container').on('click', '.delete', function(){
-  // var uniqueID = this.;
-  ideaBox.remove(uniqueID);
-})
+// $('.results-container').on('click', '.delete', function(){
+//   ideaBox.remove(uniqueID);
+// });
