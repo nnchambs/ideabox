@@ -4,6 +4,17 @@ var $bodyInput = $('#idea-body-input');
 
 onLoad();
 
+//grab the title input
+function getTitleInput() {
+var ideaTitle= $titleInput.val();
+return ideaTitle;
+}
+//grab the body input
+function getBodyInput(){
+var ideaBody = $bodyInput.val();
+return ideaBody;
+}
+
 //an idea object has a unique ID, title, body, and a quality.
 function Idea(title, body, quality, id) {
   this.title = title;
@@ -14,7 +25,7 @@ function Idea(title, body, quality, id) {
 // when the page loads, please set the local storage to an empty array with the key of 'ideas' and then render them on the DOM, pretty please
 function onLoad() {
   setLocalStorage();
-  renderLocalStorageAsFuckingIdeas;
+  renderLocalStorageAsIdeas();
 }
 // get local storage and set it to [] if there is no local storage
 function setLocalStorage () {
@@ -29,31 +40,29 @@ function getIdeasFromLocalStorage() {
   return JSON.parse(ideas);
 }
 // render the goddamn ideas
-  function renderLocalStorageAsFuckingIdeas () {
-    var ideas = getIdeasFromLocalStorage;
+  function renderLocalStorageAsIdeas () {
+    var ideas = getIdeasFromLocalStorage();
     ideas.forEach (function(idea){
       renderIdeas(idea.title, idea.body, idea.quality, idea.uniqueID);
     })
 
   };
-//function to generate and render a new ideas
+//function to generate a new idea and push it into ideas array
   function generateNewIdea() {
-          var title = $titleInput.val();
-          var body = $bodyInput.val();
-          var newIdea = new Idea(title, body);
+          var newIdea = new Idea (getTitleInput(), getBodyInput())
           ideas = getIdeasFromLocalStorage();
+          debugger;
           ideas.push(newIdea);
           var stringifiedIdeas = JSON.stringify(ideas);
           localStorage.setItem('ideas', stringifiedIdeas);
-          renderIdeas(newIdea);
+          renderIdeas(newIdea.title, newIdea.body, newIdea.quality, newIdea.id);
   };
 
 //function to render ideas on the damn page
-
-function renderIdeas(idea) {
+function renderIdeas(title, body, quality, id) {
   // var titleInput = $('#idea-title-input').val();
   // var bodyInput = $('#idea-body-input').val();
-  $('.results-container').append(`<section><h1 class="idea-output">${idea.title}<button type="image" id="${idea.uniqueID}" class="delete"></button></h1> <p class="idea-body-output">${idea.body}</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">${idea.quality}</span></section>`);
+  $('.results-container').append(`<section><h1 class="idea-output">` + title + `<button type="image" id= ` + id +  ` class="delete"></button></h1> <p class="idea-body-output">`+ body + `</p> <p class="buttons"> <button type="image" class="upVote"></button> <button type="image" class="downVote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">`+ quality +`</span></section>`);
 };
 
 
