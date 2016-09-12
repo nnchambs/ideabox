@@ -66,7 +66,7 @@ function renderIdeas(title, body, quality, id) {
 
 // function to remove Idea from DOM
 function removeIdeaFromDOM() {
-  var ideaOutput = parseInt($(this).parents().attr('id'));
+  var ideaOutput =($(this).parent().parent().attr('id'));
   debugger;
 }
 
@@ -261,7 +261,4 @@ $('.container').on('click', '.save-button', function(){
   clearInputFields();
 });
 
-$('.results-container').on('click', '.delete', function(){
-  // removeIdeaFromLocalStorage();
-  removeIdeaFromDOM();
-});
+$('.results-container').on('click', '.delete', removeIdeaFromDOM())
