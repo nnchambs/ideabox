@@ -66,9 +66,16 @@ function renderIdeas(title, body, quality, id) {
 
 // function to remove Idea from DOM
 function removeIdeaFromDOM() {
-  var ideaOutput =($(this).parent().parent().attr('id'));
-  debugger;
-}
+  var ideaOutput =$(this).closest('.idea-output');
+};
+
+// function removeParent() {
+//   var ideaArticle = $(this).closest('.idea-card');
+//   var idWeWantToDeleteFromStorage = parseInt(ideaArticle.attr("id"));
+//   deleteIdeaFromStorage(idWeWantToDeleteFromStorage);
+//   ideaArticle.remove();
+// };
+
 
 
 // function to remove idea
@@ -261,4 +268,13 @@ $('.container').on('click', '.save-button', function(){
   clearInputFields();
 });
 
-$('.results-container').on('click', '.delete', removeIdeaFromDOM())
+$('.results-container').on('click', '.delete', function() {
+  ideaToBeRemoved = $(this).parent().parent();
+  var id = parseInt(ideaToBeRemoved.attr('id'));
+  ideaToBeRemoved.remove();
+  var allIdeas = getIdeasFromLocalStorage();
+  allIdeas = allIdeas.filter(function(m){
+    return m.id !== id;
+  })
+  localStorage.setItem('ideas', JSON.stringify(allIdeas));
+});
