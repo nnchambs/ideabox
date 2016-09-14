@@ -13,7 +13,25 @@ $('.results-container').on('click', '.delete', function() {
   var id = parseInt(ideaToBeRemoved.attr('id'));
   IdeaBox.removeIdea(id);
   ideaToBeRemoved.remove();
-})
+});
+
+
+$('.results-container').on('click', '.up-vote', function() {
+  var id = parseInt($(this).parent().parent().attr('id'));
+  var ideaToBeUpVoted = IdeaBox.findIdeaByID(id);
+    if (ideaToBeUpVoted.quality === 'swill') {
+      ideaToBeUpVoted.quality = 'plausible';
+    }
+    else if (ideaToBeUpVoted.quality === 'plausible'){
+      ideaToBeUpVoted = 'genius'
+    }
+    else if (ideaToBeUpVoted.quality === 'genius') {
+      ideaToBeUpVoted = 'genius'
+    }
+  var newQuality = ideaToBeUpVoted.quality;
+  IdeaBox.upVote(id, newQuality);
+});
+
 
 $(document).ready(function(){
   IdeaBox.onLoad();
@@ -29,13 +47,17 @@ function Idea(title, body, quality, id) {
   this.id = id || Date.now();
 };
 
+Idea.prototype.upVote = function() {
+  console.log("UpVote Works!");
+}
+
+
 var IdeaBox = {
 
   ideasArray: [],
 
   createNewIdea: function() {
     var newIdea = new Idea($titleInput.val(), $bodyInput.val());
-    console.log(newIdea);
     this.ideasArray.push(newIdea);
     this.storeIdeasArray();
     this.renderIdeas(newIdea);
@@ -80,11 +102,15 @@ var IdeaBox = {
     return this.ideasArray.find(function(i){
       return i.id === id;
     })
+  },
+
+  upVote: function (id, newQuality) {
+    var idea = this.findIdeaByID(id);
+    idea.quality = newQuality;
+    this.storeIdeasArray();
+    //clear the DOM
+    this.renderIdeas(idea);
   }
 
-  //qualityUp: function(id, newQuality) {
-    // var idea = this.findIdeaByID(id)
-    // idea.quality = newQuality
-    //this.storeIdeasArray
-// }
+
 }
