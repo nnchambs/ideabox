@@ -3,11 +3,11 @@ var $titleInput = $('#idea-title-input');
 var $bodyInput = $('#idea-body-input');
 var $searchinput = $('.search-input');
 var $saveButton = $('.save-button');
-
+//event listener for save button
 $saveButton.on('click', function() {
   IdeaBox.createNewIdea();
 });
-
+//event listener for delete button
 $('.results-container').on('click', '.delete', function() {
   ideaToBeRemoved = $(this).parent().parent();
   var id = parseInt(ideaToBeRemoved.attr('id'));
@@ -15,7 +15,7 @@ $('.results-container').on('click', '.delete', function() {
   ideaToBeRemoved.remove();
 });
 
-
+//event listener for up-vote button
 $('.results-container').on('click', '.up-vote', function() {
   var id = parseInt($(this).parent().parent().attr('id'));
   var ideaToBeUpVoted = IdeaBox.findIdeaByID(id);
@@ -23,22 +23,36 @@ $('.results-container').on('click', '.up-vote', function() {
       ideaToBeUpVoted.quality = 'plausible';
     }
     else if (ideaToBeUpVoted.quality === 'plausible'){
-      ideaToBeUpVoted = 'genius'
+      ideaToBeUpVoted.quality = 'genius'
     }
     else if (ideaToBeUpVoted.quality === 'genius') {
-      ideaToBeUpVoted = 'genius'
+      ideaToBeUpVoted.quality = 'genius'
     }
   var newQuality = ideaToBeUpVoted.quality;
-  IdeaBox.upVote(id, newQuality);
+  IdeaBox.changeQuality(id, newQuality);
 });
+//event listener for down-vote button
+$('.results-container').on('click', '.down-vote', function() {
+    var id = parseInt($(this).parent().parent().attr('id'));
+    var ideaToBeDownVoted = IdeaBox.findIdeaByID(id);
+    debugger;
+    if (ideaToBeDownVoted.quality === 'genius') {
+      ideaToBeDownVoted.quality =  'plausible';
+    }
+    else if (ideaToBeDownVoted.quality === 'plausible'){
+      ideaToBeDownVoted.quality = 'swill';
+    }
+    else if (ideaToBeDownVoted.quality === 'swill'){
+      ideaToBeDownVoted.quality = 'swill';
+    }
+    var newQuality = ideaToBeDownVoted.quality;
+    IdeaBox.changeQuality(id, newQuality);
 
-
+});
+//function to get storage and render on page load
 $(document).ready(function(){
   IdeaBox.onLoad();
 });
-
-
-
 //an idea object has a unique ID, title, body, and a quality.
 function Idea(title, body, quality, id) {
   this.title = title;
@@ -104,12 +118,16 @@ var IdeaBox = {
     })
   },
 
-  upVote: function (id, newQuality) {
+  changeQuality: function (id, newQuality) {
+    // super sweet we have our idea
     var idea = this.findIdeaByID(id);
     idea.quality = newQuality;
+    // find index of current idea and replace with the new one
+    var ideaIndex = IdeaBox.ideasArray.indexOf(idea);
+    IdeaBox.ideasArray[ideaIndex] = idea;
     this.storeIdeasArray();
-    //clear the DOM
-    this.renderIdeas(idea);
+    $('.idea-output').remove();
+    this.renderIdeasArray();
   }
 
 
