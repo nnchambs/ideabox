@@ -98,6 +98,8 @@ p {
 .idea-output {
   width: 500px;
   order: 2;
+  margin-bottom: 25px;
+  border-bottom: solid thin #D1D3D4;
 }
 
 .delete {
@@ -124,6 +126,7 @@ p {
 .buttons {
 width: 500px;
 order: 4;
+margin-bottom: 10px;
 }
 
 .upVote {
@@ -154,4 +157,25 @@ order: 4;
 .downVote:hover {
   background: url(images/downvote-hover.svg);
   cursor:pointer;
+}
+
+@media screen and (max-width: 550px) {
+  .container, .results-container {
+    width: 100%;
+  }
+
+  #idea-title-input, .idea-output, .save-button, .search-input {
+    width: 300px;
+  }
+
+  #idea-body-input {
+    width: 300px;
+    height: 100px;
+  }
+
+  #idea-body-input::-webkit-input-placeholder {
+    vertical-align: text-top;
+
+  }
+
 }
