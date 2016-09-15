@@ -1,7 +1,7 @@
 //cached selectors
 var $titleInput = $('#idea-title-input');
 var $bodyInput = $('#idea-body-input');
-var $searchinput = $('.search-input');
+var $searchInput = $('.search-input');
 var $saveButton = $('.save-button');
 //event listener for save button
 $saveButton.on('click', function() {
@@ -47,8 +47,14 @@ $('.results-container').on('click', '.down-vote', function() {
     }
     var newQuality = ideaToBeDownVoted.quality;
     IdeaBox.changeQuality(id, newQuality);
-
 });
+//event listener for search function
+$searchInput.on('keyup', function() {
+  var searchInput = $searchInput.val();
+  IdeaBox.searchIdeas(searchInput);
+});
+
+
 //function to get storage and render on page load
 $(document).ready(function(){
   IdeaBox.onLoad();
@@ -128,7 +134,16 @@ var IdeaBox = {
     this.storeIdeasArray();
     $('.idea-output').remove();
     this.renderIdeasArray();
-  }
+  },
+
+  searchIdeas: function(searchInput) {
+    if(searchInput !== ""){
+      $('.results-container').find('section:not(:contains('+ searchInput + '))').slideUp();
+      $('.results-container').find('section:contains(' + searchInput + ')').slideDown();
+    } else {
+   $('.results-container').find('section').slideDown();
+ };
+}
 
 
 }
