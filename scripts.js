@@ -9,7 +9,7 @@ $saveButton.on('click', function() {
 });
 //event listener for delete button
 $('.results-container').on('click', '.delete', function() {
-  ideaToBeRemoved = $(this).parent().parent();
+  ideaToBeRemoved = $(this).parent();
   var id = parseInt(ideaToBeRemoved.attr('id'));
   IdeaBox.removeIdea(id);
   ideaToBeRemoved.remove();
@@ -35,7 +35,6 @@ $('.results-container').on('click', '.up-vote', function() {
 $('.results-container').on('click', '.down-vote', function() {
     var id = parseInt($(this).parent().parent().attr('id'));
     var ideaToBeDownVoted = IdeaBox.findIdeaByID(id);
-    debugger;
     if (ideaToBeDownVoted.quality === 'genius') {
       ideaToBeDownVoted.quality =  'plausible';
     }
@@ -54,6 +53,32 @@ $searchInput.on('keyup', function() {
   IdeaBox.searchIdeas(searchInput);
 });
 
+//event listeners for editing title and preventing default on enter key
+
+$('.results-container').on('keypress', '.editable-title', function(e) {
+  if (e.which == 13) {
+    e.preventDefault();
+    $(this).blur();
+  }
+});
+$('.results-container').on('focusout', '.editable-title', function() {
+  var id = parseInt($(this).parent().attr('id'));
+  var newTitle = $(this).text();
+  IdeaBox.changeTitle(id, newTitle);
+});
+//event listeners for editing body and preventing default on enter key
+$('.results-container').on('focusout', '.editable-body', function() {
+  var id = parseInt($(this).parent().attr('id'));
+  var newBody = $(this).text();
+  IdeaBox.changeBody(id, newBody);
+});
+
+$('.results-container').on('keypress', '.editable-body', function(e) {
+  if (e.which == 13) {
+    e.preventDefault();
+    $(this).blur();
+  }
+});
 
 //function to get storage and render on page load
 $(document).ready(function(){
@@ -67,11 +92,7 @@ function Idea(title, body, quality, id) {
   this.id = id || Date.now();
 };
 
-Idea.prototype.upVote = function() {
-  console.log("UpVote Works!");
-}
-
-
+//IdeaBox holds OUR ideas array with a whole bunch of methods
 var IdeaBox = {
 
   ideasArray: [],
@@ -88,7 +109,7 @@ var IdeaBox = {
   },
 
   renderIdeas: function (idea) {
-    $('.results-container').append(`<section id= ` + idea.id +  ` class="idea-output"><h1>` + idea.title + `<button type="image" class="delete"></button></h1> <p class="idea-body-output">`+ idea.body + `</p> <p class="buttons"> <button type="image" class="up-vote"></button> <button type="image" class="down-vote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">`+ idea.quality +`</span></section>`);
+    $('.results-container').prepend(`<section id= ` + idea.id +  ` class="idea-output"><h1 class="editable-title" contenteditable = 'true'>` + idea.title + `</h1><button type="image" class="delete"></button> <p contenteditable='true' class="editable-body">`+ idea.body + `</p> <p class="buttons"> <button type="image" class="up-vote"></button> <button type="image" class="down-vote"></button> <span class="idea-quality">quality</span>:<span class="idea-quality-rank">`+ idea.quality +`</span></section>`);
   },
 
   getStorageAndRender: function() {
@@ -125,10 +146,8 @@ var IdeaBox = {
   },
 
   changeQuality: function (id, newQuality) {
-    // super sweet we have our idea
     var idea = this.findIdeaByID(id);
     idea.quality = newQuality;
-    // find index of current idea and replace with the new one
     var ideaIndex = IdeaBox.ideasArray.indexOf(idea);
     IdeaBox.ideasArray[ideaIndex] = idea;
     this.storeIdeasArray();
@@ -143,7 +162,29 @@ var IdeaBox = {
     } else {
    $('.results-container').find('section').slideDown();
  };
-}
+},
+
+  // changeBody: function(id, newText){
+  //   var idea = this.findIdeaByID(id);
+  //   idea.
+  //
+  // },
+
+  changeTitle: function(id, newTitle){
+    var idea = this.findIdeaByID(id);
+    idea.title = newTitle;
+    var ideaIndex = IdeaBox.ideasArray.indexOf(idea);
+    IdeaBox.ideasArray[ideaIndex] = idea;
+    this.storeIdeasArray();
+  },
+
+  changeBody: function(id, newBody){
+    var idea = this.findIdeaByID(id);
+    idea.body = newBody;
+    var ideaIndex = IdeaBox.ideasArray.indexOf(idea);
+    IdeaBox.ideasArray[ideaIndex] = idea;
+    this.storeIdeasArray();
+  }
 
 
 }
