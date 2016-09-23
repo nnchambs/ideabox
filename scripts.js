@@ -14,7 +14,6 @@ $('.results-container').on('click', '.delete', function() {
   IdeaBox.removeIdea(id);
   ideaToBeRemoved.remove();
 });
-
 //event listener for up-vote button
 $('.results-container').on('click', '.up-vote', function() {
   var id = parseInt($(this).parent().parent().attr('id'));
@@ -33,19 +32,17 @@ $('.results-container').on('click', '.up-vote', function() {
 });
 //event listener for down-vote button
 $('.results-container').on('click', '.down-vote', function() {
-    var id = parseInt($(this).parent().parent().attr('id'));
-    var ideaToBeDownVoted = IdeaBox.findIdeaByID(id);
+  var id = parseInt($(this).parent().parent().attr('id'));
+  var ideaToBeDownVoted = IdeaBox.findIdeaByID(id);
     if (ideaToBeDownVoted.quality === 'genius') {
       ideaToBeDownVoted.quality =  'plausible';
+    } else if (ideaToBeDownVoted.quality === 'plausible'){
+    ideaToBeDownVoted.quality = 'swill';
+    } else if (ideaToBeDownVoted.quality === 'swill'){
+    ideaToBeDownVoted.quality = 'swill';
     }
-    else if (ideaToBeDownVoted.quality === 'plausible'){
-      ideaToBeDownVoted.quality = 'swill';
-    }
-    else if (ideaToBeDownVoted.quality === 'swill'){
-      ideaToBeDownVoted.quality = 'swill';
-    }
-    var newQuality = ideaToBeDownVoted.quality;
-    IdeaBox.changeQuality(id, newQuality);
+  var newQuality = ideaToBeDownVoted.quality;
+  IdeaBox.changeQuality(id, newQuality);
 });
 //event listener for search function
 $searchInput.on('keyup', function() {
@@ -79,7 +76,6 @@ $('.results-container').on('keypress', '.editable-body', function(e) {
     $(this).blur();
   }
 });
-
 //function to get storage and render on page load
 $(document).ready(function(){
   IdeaBox.onLoad();
@@ -92,6 +88,9 @@ function Idea(title, body, quality, id) {
   this.id = id || Date.now();
 };
 
+function sortIdeas(){
+  
+}
 //IdeaBox holds OUR ideas array with a whole bunch of methods
 var IdeaBox = {
 
